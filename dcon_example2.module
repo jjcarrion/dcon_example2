@@ -1,0 +1,27 @@
+<?php
+/**
+ * @file
+ * File that contains the code for the module DCon Example 2.
+ */
+
+/**
+ * Implements hook_user_login().
+ */
+function dcon_example2_user_login(&$edit, $account) {
+  dsm($account);
+  if (!$account->picture) {
+    drupal_set_message('Upload a picture to your user profile!');
+
+    // http://drupal.stackexchange.com/questions/43839/custom-login-redirect-failed-in-hook-user-login
+    $_GET['destination'] = '/user/' . $account->uid . '/edit';
+  }
+}
+
+function dcon_example2_form_alter(&$form, &$form_state, $form_id) {
+dsm($form_id);
+  if ($form_id == 'article_node_form') {
+    dsm('estoy aqui');
+    dsm($form);
+    $form['title']['#description'] = 'Mi descripcion';
+  }
+}
